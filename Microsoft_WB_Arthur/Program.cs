@@ -40,6 +40,7 @@ namespace Microsoft_WB_Arthur
             Node tree3 = new Node("Thank you");
             tree3.Left = new Node("Microsoft");
             tree3.Right = new Node("For the opportunity");
+            tree3.Left.Left = new Node("Hello");
             //Call to my Method.
             Console.WriteLine("When comparing tree1 and tree3 the result of if they are identical is {0}", IdenticalTrees(tree1, tree3));
 
@@ -51,29 +52,37 @@ namespace Microsoft_WB_Arthur
         public static bool IdenticalTrees(Node Root1, Node Root2)
         {
             //If each root is null then they are the same.
-            if (Root1 == null && Root1 == null)
-            {
-                return true;
-            }
-            //If the length of the string in the node is not the same it fails.
-            else if(Root1.Data.Length != Root2.Data.Length)
+            if (Root1.Right != null && Root2.Right == null || Root1.Right == null && Root2.Right != null)
             {
                 return false;
             }
-            //If the value of each node is not equal.
+            else if (Root1.Left != null && Root2.Left == null || Root1.Left == null && Root2.Left != null)
+            {
+                return false;
+            }
             else if (Root1.Data != Root2.Data)
             {
                 return false;
             }
-            //Recursively  call the method the iterate through the tree
-            else if (Root1.Data != null && Root2.Data != null)
+            else
             {
-                return IdenticalTrees(Root1.Left, Root2.Left) && IdenticalTrees(Root1.Right, Root2.Right);
+                if (Root1.Left != null && Root2.Left != null)
+                {
+                    if (!IdenticalTrees(Root1.Left, Root2.Left))
+                        return false;
+                }
+                if (Root1.Right != null && Root2.Right != null)
+                {
+                    if (!IdenticalTrees(Root1.Right, Root2.Right))
+                        return false;
+                }
             }
-            return false;
+            return true;
         }
+
+
     }
-   
-    
+
+
 
 }
